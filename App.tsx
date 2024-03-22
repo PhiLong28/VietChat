@@ -4,10 +4,14 @@ import { NavigationContainer, useTheme } from '@react-navigation/native'
 import { SplashScreen } from './src/screens'
 import MainNavigator from './src/navigators/MainNavigator'
 import AuthNavigator from './src/navigators/AuthNavigator'
+import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 
 const App = () => {
 
   const [isShowSplash, setIsShowSplash]=useState(true)
+  const [accessToken, setAccessToken] = useState('')
+
+  const {getItem, setItem} = useAsyncStorage('assetToken')
 
   useEffect(()=>{
     const timeout = setTimeout(() => {
@@ -15,9 +19,17 @@ const App = () => {
     }, 1500);
     
   return () => clearTimeout(timeout)
-
   }, [])
 
+  useEffect(()=>{
+    checkLogin()
+  },[])
+
+  const checkLogin = async () => {
+    const token = await getItem()
+    token && setAccessToken(token)
+    
+  }
   return (
   <>
     <StatusBar 
@@ -28,7 +40,9 @@ const App = () => {
     {
       isShowSplash ? <SplashScreen/> : (
         <NavigationContainer>
-          <AuthNavigator/>
+          {
+            accessToken ? <MainNavigator/> : <AuthNavigator/>
+          }
         </NavigationContainer>
       )
     }
