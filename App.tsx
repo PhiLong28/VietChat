@@ -38,7 +38,7 @@ const App = () => {
       translucent
     />
     {
-      isShowSplash ? <SplashScreen/> : (
+      isShowSplash ? ( <SplashScreen/> ) : (
         <NavigationContainer>
           {
             accessToken ? <MainNavigator/> : <AuthNavigator/>
