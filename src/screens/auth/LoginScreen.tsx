@@ -8,7 +8,7 @@ import { Lock, Sms } from 'iconsax-react-native'
 import { Image } from 'react-native'
 import SocialLogin from './components/SocialLogin'
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}: any) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,14 +20,14 @@ const LoginScreen = () => {
       styles={{
         justifyContent:'center',
         alignItems:'center',
-        marginTop: 75,
+        marginTop: 25,
       }}>
         <Image 
           source={require('../../assets/images/text-logo.png')}
           style={{
             width: 270,
             height: 114,
-            marginBottom: 30,
+            marginBottom: 20,
           }}
         />
       </SectionComponent>
@@ -61,7 +61,7 @@ const LoginScreen = () => {
             </RowComponent>
             <ButtonComponent 
               text='Forgot Password?'
-              onPress={()=>{}}
+              onPress={()=> navigation.navigate('ForgotPassword')}
               type='text'
             />
         </RowComponent>
@@ -73,7 +73,11 @@ const LoginScreen = () => {
       <SectionComponent>
         <RowComponent justify='center'>
           <TextComponent text='Dont have an account? '/>
-          <ButtonComponent type='link' text='Sign up' />
+          <ButtonComponent 
+          type='link' 
+          text='Sign up' 
+          onPress={()=> navigation.navigate('SignUpScreen')}
+          />
         </RowComponent>
       </SectionComponent>
     </ContainerComponent>
