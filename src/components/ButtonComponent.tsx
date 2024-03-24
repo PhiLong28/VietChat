@@ -8,7 +8,7 @@ import { fontfamilies } from '../constants/fontFamilies'
 interface Props {
     icon?: ReactNode,
     text: string,
-    type?: 'primary' | 'text' | 'Link',
+    type?: 'primary' | 'text' | 'link',
     color?: string,
     styles?: StyleProp<ViewStyle>,
     textColor?: string,
@@ -23,9 +23,9 @@ const ButtonComponent = (props: Props) => {
         icon,text, textColor, textStyles, color, styles, onPress, iconFlex, type
     } = props
 
-    return (
-        type === 'primary' ?
+    return type === 'primary' ?  (
             <TouchableOpacity 
+                onPress={onPress}
                 style={[
                     globalStyles.button, 
                     {
@@ -43,12 +43,15 @@ const ButtonComponent = (props: Props) => {
                         },
                     ]}
                     flex={icon && iconFlex === 'right' ? 1 : 0}
+                    font={fontfamilies.medium}
                 />
                 {icon && iconFlex === 'right' && icon}
             </TouchableOpacity>
-        : <TouchableOpacity>
-            <TextComponent text={text}
-                color={type === 'Link' ? appColors.primary : appColors.text}
+     )   :  (<TouchableOpacity>
+            <TextComponent 
+            
+                text={text}
+                color={type === 'link' ? appColors.primary : appColors.text}
             />
         </TouchableOpacity>
     )
