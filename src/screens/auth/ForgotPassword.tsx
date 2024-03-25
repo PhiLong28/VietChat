@@ -12,7 +12,7 @@ const [email, setEmail] = useState('');
   return (
     <ContainerComponent back isImageBackground>
       <SectionComponent>
-        <TextComponent text='Resset Password' title/>
+        <TextComponent text='Reset Password' title/>
         <TextComponent text='Please enter your email address to request a password reset'/>
         <SpaceComponent height={26}/>
         <InputComponent 

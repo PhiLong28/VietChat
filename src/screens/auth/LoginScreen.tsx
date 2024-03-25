@@ -7,6 +7,9 @@ import { appColors } from '../../constants/appColors'
 import { Lock, Sms } from 'iconsax-react-native'
 import { Image } from 'react-native'
 import SocialLogin from './components/SocialLogin'
+import { err } from 'react-native-svg'
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
+import authenticationAPI from '../../apis/authApi'
 
 const LoginScreen = ({navigation}: any) => {
 
@@ -14,6 +17,17 @@ const LoginScreen = ({navigation}: any) => {
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
 
+  const handleLogin = async () => {
+    try {
+      const res = await authenticationAPI.HandleAuthentication('/hello');
+      console.log(res);
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+
+  }
   return (
     <ContainerComponent isImageBackground isScroll>
       <SectionComponent 
@@ -67,7 +81,7 @@ const LoginScreen = ({navigation}: any) => {
         </RowComponent>
       </SectionComponent>
       <SectionComponent>
-        <ButtonComponent text='SIGN IN' type='primary'/>
+        <ButtonComponent onPress={handleLogin} text='SIGN IN' type='primary'/>
       </SectionComponent>
       <SocialLogin/>
       <SectionComponent>
