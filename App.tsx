@@ -11,34 +11,22 @@ import AppRouters from './src/navigators/AppRouters'
 
 const App = () => {
 
-  const [isShowSplash, setIsShowSplash]=useState(true)
- 
-  useEffect(()=>{
-    const timeout = setTimeout(() => {
-      setIsShowSplash(false)
-    }, 1500);
-    
-  return () => clearTimeout(timeout)
-  }, [])
-
+  
 
   return (
-  <>
-  <Provider store={store}>
-    <StatusBar 
-      barStyle={'dark-content'} 
-      backgroundColor='transparent'
-      translucent
-    />
-      {
-        isShowSplash ? ( <SplashScreen/> ) : (
-          <NavigationContainer>
-            <AppRouters/>
-          </NavigationContainer>
-        )
-      }
-    </Provider>
-  </>
+    <>
+      <Provider store={store}>
+        <StatusBar 
+          barStyle={'dark-content'} 
+          backgroundColor='transparent'
+          translucent
+        />
+          
+              <NavigationContainer>
+                <AppRouters/>
+              </NavigationContainer>
+        </Provider>
+    </>
   )
 }
 

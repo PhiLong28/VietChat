@@ -1,4 +1,4 @@
-import { View, Text, Button, Switch } from 'react-native'
+import { View, Text, Button, Switch, Alert } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ButtonComponent, InputComponent, SectionComponent, TextComponent, ContainerComponent, SpaceComponent, RowComponent} from '../../components'
@@ -10,22 +10,35 @@ import SocialLogin from './components/SocialLogin'
 import { err } from 'react-native-svg'
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 import authenticationAPI from '../../apis/authApi'
+import { Validate } from '../../untils/Validate'
+import { useDispatch } from 'react-redux'
+import { addAuth } from '../../redux/reducers/authReducer'
 
 const LoginScreen = ({navigation}: any) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
+  const dispach = useDispatch();
 
   const handleLogin = async () => {
-    try {
-      const res = await authenticationAPI.HandleAuthentication('/hello');
-      console.log(res);
-      
-    } catch (error) {
-      console.log(error);
-      
+
+    //Rang buoc dieu kien email phai nhap dung moi thuc hien
+    const emailValidation = Validate.email(email);
+    if (emailValidation) {
+      try {
+        const res = await authenticationAPI.HandleAuthentication('/login', {email, password}, 'post');
+        dispach(addAuth(res.data))
+       
+        await AsyncStorage.setItem('auth', isRemember ? JSON.stringify(res.data) : email);
+
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      Alert.alert('Email is not correct!!!')
     }
+
 
   }
   return (
