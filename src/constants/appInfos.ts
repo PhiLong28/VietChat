@@ -5,5 +5,5 @@ export const appInfos = {
         width:Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
-    BASE_URL: 'http://192.168.248.79:3001',
+    BASE_URL: 'http://192.168.1.223:3001',
 }

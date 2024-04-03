@@ -10,6 +10,8 @@ import SocialLogin from './components/SocialLogin'
 import { LoadingModal } from '../../modals'
 import authenticationAPI from '../../apis/authApi'
 import { Validate } from '../../untils/Validate'
+import { useDispatch } from 'react-redux'
+import { addAuth } from '../../redux/reducers/authReducer'
 
 const initValue = {
   username: '',
@@ -23,6 +25,7 @@ const SignUpScreen = ({navigation}: any) => {
   const [values, setValues] = useState(initValue);
   const [isLoading, setIsLoading]=useState(false);
   const [errorMessagge, setErrorMessage]=useState('');
+  const dispatch = useDispatch()
   
   useEffect(()=>{
     if(values.email || values.password){
@@ -51,10 +54,15 @@ const SignUpScreen = ({navigation}: any) => {
         try {
           const res = await authenticationAPI.HandleAuthentication(
             '/register', 
-            values, 
+            {
+              fullname: values.username,
+              email,
+              password,
+            }, 
             'post'
             );
-          console.log(res);
+          dispatch(addAuth(res.data));
+          await AsyncStorage.setItem('auth', JSON.stringify(res.data));
           setIsLoading(false)
           
         } catch (error) {
